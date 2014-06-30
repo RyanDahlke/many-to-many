@@ -216,7 +216,9 @@ if __name__ == "__main__":
     # about what's happening.
 
 
-    # Modify the script above so that the Pet-Person relationship uyses an association object (presently it uses an association table, but not an association object)
+    # Modify the script above so that the Pet-Person relationship uyses an association 
+    # object(presently it uses an association table, but not an association object).
+
     
     db_session.close()
     log.info("all done!")
