@@ -215,23 +215,16 @@ if __name__ == "__main__":
     db_session.add_all(spot, goldie)
     db_session.commit()
 
+    assert tom in spot.people
+	spot.people.remove(john)
+	assert spot not in tom.pets
 
     #################################################
     #  Now it's up to you to complete this script ! #
     #################################################
     
+    
 
-    # For each of the following steps, be sure to use log to print out feedback
-    # about what's happening.
-
-
-    # Add 
-    #
-
-    # Add an attribute to the association object that tracks the number of years a pet
-    # has been with a person.
-
-    # Create another association object that nicknames 
 
     
     db_session.close()
