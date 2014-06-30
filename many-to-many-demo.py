@@ -215,6 +215,8 @@ if __name__ == "__main__":
     # For each of the following steps, be sure to use log to print out feedback
     # about what's happening.
 
+
+    # Modify the script above so that the Pet-Person relationship uyses an association object (presently it uses an association table, but not an association object)
     
     db_session.close()
     log.info("all done!")
