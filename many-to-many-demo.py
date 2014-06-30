@@ -186,6 +186,10 @@ if __name__ == "__main__":
                 phone = '555 243 9988')
 
 
+    # create two animals, and in process, new species, with two breeds.
+    # Note how we only explicitly commit spot and goldie below, but by doing so
+    # we also save our new people, breeds, and species.
+    
     spot = Pet(name = "Spot",
                 age = 2,
                 adopted = True,
