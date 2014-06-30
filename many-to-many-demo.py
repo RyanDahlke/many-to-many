@@ -216,14 +216,14 @@ if __name__ == "__main__":
     db_session.commit()
 
     assert tom in spot.people
-	spot.people.remove(john)
+    spot.people.remove(john)
 	assert spot not in tom.pets
 
     #################################################
     #  Now it's up to you to complete this script ! #
     #################################################
     
-    
+
 
 
     
