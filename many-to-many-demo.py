@@ -173,12 +173,13 @@ if __name__ == "__main__":
    
 
     # create two people: Tom and Sue
+    log.info("Creating person object for Tom")
     tom = Person(first_name="Tom",
                 last_name="Smith",
                 age=52,
                 phone = '555-555-5555')
 
-
+    log.info("Creating person object for Sue")
     sue = Person(first_name="Sue",
                 last_name="Johson",
                 age=54,
@@ -216,8 +217,8 @@ if __name__ == "__main__":
     # about what's happening.
 
 
-    # Modify the script above so that the Pet-Person relationship uyses an association 
-    # object (presently it uses an association table, but not an association object). 
+    # Add 
+    #
 
     # Add an attribute to the association object that tracks the number of years a pet
     # has been with a person.
