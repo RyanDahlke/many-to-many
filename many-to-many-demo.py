@@ -217,7 +217,12 @@ if __name__ == "__main__":
 
 
     # Modify the script above so that the Pet-Person relationship uyses an association 
-    # object (presently it uses an association table, but not an association object).
+    # object (presently it uses an association table, but not an association object). 
+
+    # Add an attribute to the association object that tracks the number of years a pet
+    # has been with a person.
+
+    # Create another association object that nicknames 
 
     
     db_session.close()
