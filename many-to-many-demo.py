@@ -65,6 +65,10 @@ class Breed(Base):
         return "{}: {}".format(self.name, self.species) 
 
 
+#########################################################
+#   Add your code for BreedTraits object here			#
+#########################################################
+
 class Shelter(Base):
     __tablename__ = 'shelter'
     id = Column(Integer, primary_key=True)
