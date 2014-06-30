@@ -223,9 +223,10 @@ if __name__ == "__main__":
     #  Now it's up to you to complete this script ! #
     #################################################
     
+    # Add your code that adds breed traits and links breeds with traits
+    # here.
 
-
-
+    #################################################
     
     db_session.close()
     log.info("all done!")
