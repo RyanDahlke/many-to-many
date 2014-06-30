@@ -189,7 +189,8 @@ if __name__ == "__main__":
     # create two animals, and in process, new species, with two breeds.
     # Note how we only explicitly commit spot and goldie below, but by doing so
     # we also save our new people, breeds, and species.
-    
+
+    log.info("Creating pet object for Spot, who is a Dalmatian dog")
     spot = Pet(name = "Spot",
                 age = 2,
                 adopted = True,
@@ -202,6 +203,7 @@ if __name__ == "__main__":
     # happen if we created Dog on the fly again when instantiating Goldie
     dog = spot.breed.species
 
+    log.info("Creating pet object for Goldie, who is a Golden Retriever dog")
     goldie = Pet(name="Goldie",
                 age=9,
                 adopted = False,
