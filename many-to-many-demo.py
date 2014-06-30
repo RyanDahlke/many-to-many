@@ -212,7 +212,9 @@ if __name__ == "__main__":
     #################################################
     
 
-    
+    # For each of the following steps, be sure to use log to print out feedback
+    # about what's happening.
+
     
     db_session.close()
     log.info("all done!")
