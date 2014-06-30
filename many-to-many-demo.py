@@ -204,10 +204,14 @@ if __name__ == "__main__":
                 breed = Breed(name="Golden Retriever", species=dog)
                 ) 
 
+    db_session.add_all(spot, goldie)
+    db_session.commit()
 
     #################################################
     #  Now it's up to you to complete this script ! #
     #################################################
+    
+
     
     
     db_session.close()
