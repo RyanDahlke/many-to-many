@@ -39,6 +39,7 @@ class Species(Base):
     # database fields
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
+    breeds = relationship('Breed', backref="species")
 
     # methods
     def __repr__(self):
@@ -55,11 +56,8 @@ class Breed(Base):
     # database fields
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    species_id = Column(Integer, ForeignKey('species.id'), nullable=False ) 
-
-    # mapped relationships
-    species = relationship("Species", backref=backref('breeds', order_by=name) )           
-
+    species_id = Column(Integer, ForeignKey('species.id'), nullable=False )            
+    pets = relationship('Pet', backref="breed")
     # methods
     def __repr__(self):
         return "{}: {}".format(self.name, self.species) 
@@ -74,6 +72,7 @@ class Shelter(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     website = Column(Text)
+    pets = relationship('Pet', backref="shelter")
 
     def __repr__(self):
         return "Shelter: {}".format(self.name) 
@@ -97,9 +96,8 @@ class Pet(Base):
     age = Column(Integer)
     adopted = Column(Boolean)
     breed_id = Column(Integer, ForeignKey('breed.id'), nullable=False ) 
-    breed = relationship("Breed", backref=backref('pets', order_by=name) )
     shelter_id = Column(Integer, ForeignKey('shelter.id') ) 
-    shelter = relationship("Shelter", backref=backref('pets', order_by=name) )
+    
     # no foreign key here, it's in the many-to-many table        
     # mapped relationship, pet_person_table must already be in scope!
     people = relationship('Person', secondary=pet_person_table, backref='pets')
@@ -216,11 +214,11 @@ if __name__ == "__main__":
                 ) 
 
     log.info("Adding Goldie and Spot to session and committing changes to DB")
-    db_session.add_all(spot, goldie)
+    db_session.add_all([spot, goldie])
     db_session.commit()
 
     assert tom in spot.people
-    spot.people.remove(john)
+    spot.people.remove(tom)
     assert spot not in tom.pets
 
     #################################################
