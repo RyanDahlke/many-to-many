@@ -84,7 +84,7 @@ class BreedTraits(Base):
     # methods
     def __repr__(self):
         return "BreedTrait: {}".format(self.name)
-    
+
 class Shelter(Base):
     __tablename__ = 'shelter'
     id = Column(Integer, primary_key=True)
