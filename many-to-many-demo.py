@@ -48,28 +48,32 @@ class Species(Base):
 
 class Breed(Base):
     """
-    domain model class for a Breed
-    has a with many-to-one relationship Species
+    domain model class for a BreedTraits
+    has a many-to-many relationship with Breed
     """
-    __tablename__ = 'breed'
+    __tablename__ = 'breedtraits'
 
     # database fields
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    species_id = Column(Integer, ForeignKey('species.id'), nullable=False )
-    pets = relationship('Pet', backref="breed")
+    breeds = relationship('Breed', secondary=breed_breedtraits_table, backref='breed')
+
     # methods
     def __repr__(self):
-        return "{}: {}".format(self.name, self.species)
+        return "BreedTrait: {}".format(self.name)
 
 
-#########################################################
-#   Add your code for BreedTraits object here			#
-#########################################################
-breed_breedtraits_table = Table('breed_breedtraits', Base.metadata,
-    Column('breed_id', Integer, ForeignKey('breed.id'), nullable=False),
-    Column('breedtraits_id', Integer, ForeignKey('breedtraits.id'), nullable=False)
-)
+class BreedTraits(Base):
+    """
+    Domain model class for a BreedTraits
+    has a many-to-many relationship with Breed
+    """
+    __tablename__='breedtraits'
+
+    #database fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    species_id = Column(Integer, ForeignKey('species.id'), nullable=False )
 
 class Shelter(Base):
     __tablename__ = 'shelter'
@@ -234,11 +238,20 @@ if __name__ == "__main__":
 
     #################################################
     log.info("Creates a breedtrait object for dog breeds who adapt well to apartment living.")
-    apartment = BreedTraits(name="apartment")
+    apartment = BreedTraits(name="apartment",
+                            breeds = [ Breed(name="Dalmatian", species=Species(name="Dog")),
+                                       Breed(name="Golden Retriever", species=dog) ])
+
     log.info("Creates a breedtrait object for dog breeds who are friendly.")
-    friendly = BreedTraits(name="friendly")
+    friendly = BreedTraits(name="friendly",
+                           breeds = [ Breed(name="Golden Retriever", species=dog)])
+
     log.info("Creates a breedtrait object for dog breeds that shed a lot.")
-    sheds = BreedTraits(name="sheds")
+    sheds = BreedTraits(name="sheds"
+                        breeds = [ Breed(name="Dalmation", species=Species(name="Dog")) ])
+
+    db_session.add_all([ apartment, friendly, sheds])
+    db_session.commit()
 
     db_session.close()
     log.info("all done!")
