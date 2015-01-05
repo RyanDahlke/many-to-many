@@ -43,7 +43,7 @@ class Species(Base):
 
     # methods
     def __repr__(self):
-        return self.name                   
+        return self.name
 
 
 class Breed(Base):
@@ -56,16 +56,20 @@ class Breed(Base):
     # database fields
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    species_id = Column(Integer, ForeignKey('species.id'), nullable=False )            
+    species_id = Column(Integer, ForeignKey('species.id'), nullable=False )
     pets = relationship('Pet', backref="breed")
     # methods
     def __repr__(self):
-        return "{}: {}".format(self.name, self.species) 
+        return "{}: {}".format(self.name, self.species)
 
 
 #########################################################
 #   Add your code for BreedTraits object here			#
 #########################################################
+breed_breedtraits_table = Table('breed_breedtraits', Base.metadata,
+    Column('breed_id', Integer, ForeignKey('breed.id'), nullable=False),
+    Column('breedtraits_id', Integer, ForeignKey('breedtraits.id'), nullable=False)
+)
 
 class Shelter(Base):
     __tablename__ = 'shelter'
@@ -75,10 +79,10 @@ class Shelter(Base):
     pets = relationship('Pet', backref="shelter")
 
     def __repr__(self):
-        return "Shelter: {}".format(self.name) 
+        return "Shelter: {}".format(self.name)
 
 
-# our many-to-many association table, in our domain model *before* Pet class 
+# our many-to-many association table, in our domain model *before* Pet class
 pet_person_table = Table('pet_person', Base.metadata,
     Column('pet_id', Integer, ForeignKey('pet.id'), nullable=False),
     Column('person_id', Integer, ForeignKey('person.id'), nullable=False)
@@ -95,15 +99,15 @@ class Pet(Base):
     name = Column(String, nullable=False)
     age = Column(Integer)
     adopted = Column(Boolean)
-    breed_id = Column(Integer, ForeignKey('breed.id'), nullable=False ) 
-    shelter_id = Column(Integer, ForeignKey('shelter.id') ) 
-    
+    breed_id = Column(Integer, ForeignKey('breed.id'), nullable=False )
+    shelter_id = Column(Integer, ForeignKey('shelter.id') )
+
     # no foreign key here, it's in the many-to-many table        
     # mapped relationship, pet_person_table must already be in scope!
     people = relationship('Person', secondary=pet_person_table, backref='pets')
 
     def __repr__(self):
-        return "Pet:{}".format(self.name) 
+        return "Pet:{}".format(self.name)
 
 class Person(Base):
     __tablename__ = 'person'
@@ -125,7 +129,7 @@ class Person(Base):
         return "%s-%s-%s" % (num[0:3], num[3:6], num[6:10])
 
     # phone number writing property, writing to public Person.phone calls this 
-    @phone.setter 
+    @phone.setter
     def phone(self, value):
         """store only numeric digits, raise exception on wrong number length"""
         # remove any hyphens
@@ -140,14 +144,14 @@ class Person(Base):
             self._phone = number
 
     def __repr__(self):
-        return "Person: {} {}".format(self.first_name, self.last_name) 
+        return "Person: {} {}".format(self.first_name, self.last_name)
 
 
 ################################################################################
 def init_db(engine):
     "initialize our database, drops and creates our tables"
     log.info("init_db() engine: {}".format(engine) )
-    
+
     # drop all tables and recreate
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
@@ -156,7 +160,7 @@ def init_db(engine):
 
 
 if __name__ == "__main__":
-    log.info("main executing:")              
+    log.info("main executing:")
 
     # create an engine
     engine = create_engine('sqlite:///:memory:')
@@ -168,11 +172,11 @@ if __name__ == "__main__":
 
     # call the sessionmaker factory to make a Session class 
     Session = sessionmaker(bind=engine)
-    
+
     # get a local session for the this script
     db_session = Session()
     log.info("Session created: {}".format(db_session) )
-   
+
 
     # create two people: Tom and Sue
     log.info("Creating person object for Tom")
@@ -211,7 +215,7 @@ if __name__ == "__main__":
                 adopted = False,
                 shelter = Shelter(name="Happy Animal Place"),
                 breed = Breed(name="Golden Retriever", species=dog)
-                ) 
+                )
 
     log.info("Adding Goldie and Spot to session and committing changes to DB")
     db_session.add_all([spot, goldie])
@@ -224,11 +228,11 @@ if __name__ == "__main__":
     #################################################
     #  Now it's up to you to complete this script ! #
     #################################################
-    
+
     # Add your code that adds breed traits and links breeds with traits
     # here.
 
     #################################################
-    
+
     db_session.close()
     log.info("all done!")
