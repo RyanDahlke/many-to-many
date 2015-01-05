@@ -233,6 +233,12 @@ if __name__ == "__main__":
     # here.
 
     #################################################
+    log.info("Creates a breedtrait object for dog breeds who adapt well to apartment living.")
+    apartment = BreedTraits(name="apartment")
+    log.info("Creates a breedtrait object for dog breeds who are friendly.")
+    friendly = BreedTraits(name="friendly")
+    log.info("Creates a breedtrait object for dog breeds that shed a lot.")
+    sheds = BreedTraits(name="sheds")
 
     db_session.close()
     log.info("all done!")
